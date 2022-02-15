@@ -6,6 +6,8 @@ from src.build_page import build_page
 path_data = './data'
 path_out = './out'
 output_card_dimension = (936, 672) #lines/columns
+output_page_layout = (3,3)
+cards_per_page = output_page_layout[0]*output_page_layout[1]
 
 if not os.path.exists(path_out):
     os.mkdir(path_out)
@@ -31,5 +33,7 @@ for root, dirs, files in os.walk(dir_path):
             # cv2.imwrite(os.path.join(cwd, path_out, str(i) + ".jpg"), final_card)
             i+=1
 
-page = build_page((3,3), cards, output_card_dimension)
-cv2.imwrite(os.path.join(cwd, path_out, "page" + str(i) + ".jpg"), page)
+print(cards_per_page)
+for i in range(0,len(cards), cards_per_page):
+    page = build_page(output_page_layout, cards[i:i+cards_per_page], output_card_dimension)
+    cv2.imwrite(os.path.join(cwd, path_out, "page" + str(i) + ".jpg"), page)

@@ -1,5 +1,6 @@
 import os
 import cv2
+import numpy as np
 from src.fusion_images import fusion_images
 from src.build_page import build_page
 

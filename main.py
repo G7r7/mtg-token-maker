@@ -19,6 +19,13 @@ cards = []
 
 i = 0
 
+def sharpen(img):
+    kernel = np.array([[0, -1, 0],
+                   [-1, 5,-1],
+                   [0, -1, 0]])
+    sharpen_img = cv2.filter2D(src=img, ddepth=-1, kernel=kernel)
+    return sharpen_img
+
 for root, dirs, files in os.walk(dir_path):
     for dirname in dirs:
         for root, dirs, files in os.walk(os.path.join(dir_path, dirname)):
@@ -28,6 +35,7 @@ for root, dirs, files in os.walk(dir_path):
             im1 = cv2.resize(im1, (output_card_dimension[1], output_card_dimension[0]))
             im2 = cv2.resize(im2, (output_card_dimension[1], output_card_dimension[0]))
             final_card = fusion_images(im1,im2)
+            final_card = sharpen(final_card)
             cards.append(final_card)
             print(im1.shape, final_card.shape)	
             # cv2.imwrite(os.path.join(cwd, path_out, str(i) + ".jpg"), final_card)
